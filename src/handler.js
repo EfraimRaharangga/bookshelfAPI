@@ -203,15 +203,10 @@ const deleteBook = (request, h) => {
   return response;
 };
 
-const filterReading = (request, h) => {
-  const { reading } = request.params;
-};
-
 module.exports = {
   saveBook,
   showAllBooks,
   showSpecifiedBook,
   editBook,
   deleteBook,
-  filterReading,
 };
