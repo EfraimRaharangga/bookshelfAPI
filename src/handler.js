@@ -133,7 +133,7 @@ const editBook = (request, h) => {
   const index = datas.findIndex((data) => data.id == bookId);
 
   //responnya
-  if (name === false || name === undefined) {
+  if (!name) {
     const response = h.response({
       status: "fail",
       message: "Gagal memperbarui buku. Mohon isi nama buku",
