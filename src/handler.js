@@ -16,8 +16,8 @@ const saveBook = (request, h) => {
 
   //data yang dibuat
   const id = nanoid(16);
-  const insertAt = new Date().toISOString();
-  const updateAt = insertAt;
+  const insertedAt = new Date().toISOString();
+  const updatedAt = insertedAt;
 
   let finished = false;
   if (pageCount === readPage) {
@@ -35,16 +35,15 @@ const saveBook = (request, h) => {
     pageCount,
     readPage,
     finished,
+    reading,
     readPage,
-    insertAt,
-    updateAt,
+    insertedAt,
+    updatedAt,
   };
-
-  datas.push(newData);
 
   //memberikan respon
 
-  if (name === false || name === undefined) {
+  if (!name) {
     const response = h.response({
       status: "fail",
       message: "Gagal menambahkan buku. Mohon isi nama buku",
@@ -60,6 +59,7 @@ const saveBook = (request, h) => {
     response.code(400);
     return response;
   } else if (datas.filter((data) => data.id === id)) {
+    datas.push(newData);
     const response = h.response({
       status: "success",
       message: "Buku berhasil ditambahkan",
@@ -78,12 +78,22 @@ const saveBook = (request, h) => {
   return response;
 };
 
-const showAllBooks = () => ({
-  status: "success",
-  data: {
-    datas,
-  },
-});
+const showAllBooks = () => {
+  const book = datas.map((data) => {
+    return {
+      id: data.id,
+      name: data.name,
+      publisher: data.publisher,
+    };
+  });
+  const response = {
+    status: "success",
+    data: {
+      books: book,
+    },
+  };
+  return response;
+};
 
 const showSpecifiedBook = (request, h) => {
   const { bookId } = request.params;
@@ -93,7 +103,7 @@ const showSpecifiedBook = (request, h) => {
     return {
       status: "success",
       data: {
-        data,
+        book: data,
       },
     };
   }
@@ -118,7 +128,7 @@ const editBook = (request, h) => {
     readPage,
     reading,
   } = request.payload;
-  const updateAt = new Date().toISOString();
+  const updatedAt = new Date().toISOString();
 
   const index = datas.findIndex((data) => data.id == bookId);
 
@@ -151,7 +161,7 @@ const editBook = (request, h) => {
       pageCount,
       readPage,
       reading,
-      updateAt,
+      updatedAt,
     };
 
     const response = h.response({

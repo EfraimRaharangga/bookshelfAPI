@@ -1,3 +1,3 @@
-const datas = [];
+let datas = [];
 
 module.exports = datas;

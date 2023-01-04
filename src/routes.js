@@ -33,11 +33,6 @@ const routes = [
     path: "/books/{bookId}",
     handler: deleteBook,
   },
-  // {
-  //   method: "GET",
-  //   path: "/books?reading={reading}",
-  //   handler: filterReading,
-  // },
 ];
 
 module.exports = routes;
