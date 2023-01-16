@@ -78,21 +78,62 @@ const saveBook = (request, h) => {
   return response;
 };
 
-const showAllBooks = () => {
-  const book = datas.map((data) => {
-    return {
-      id: data.id,
-      name: data.name,
-      publisher: data.publisher,
+const showAllBooks = (request, h) => {
+  const query = request.query;
+
+  if (query.reading == 1) {
+    const book = datas
+      .filter((data) => data.reading == true)
+      .map((data) => {
+        return { id: data.id, name: data.name, publisher: data.publisher };
+      });
+    const response = {
+      status: "success",
+      data: {
+        books: book,
+      },
     };
-  });
-  const response = {
-    status: "success",
-    data: {
-      books: book,
-    },
-  };
-  return response;
+    return response;
+  } else if (query.reading == 0) {
+    const book = datas
+      .filter((data) => data.reading == false)
+      .map((data) => {
+        return { id: data.id, name: data.name, publisher: data.publisher };
+      });
+    const response = {
+      status: "success",
+      data: {
+        books: book,
+      },
+    };
+    return response;
+  } else if (query.finished == 0) {
+    const book = datas
+      .filter((data) => data.finished == false)
+      .map((data) => {
+        return { id: data.id, name: data.name, publisher: data.publisher };
+      });
+    const response = {
+      status: "success",
+      data: {
+        books: book,
+      },
+    };
+    return response;
+  } else if (query.finished == 1) {
+    const book = datas
+      .filter((data) => data.finished == true)
+      .map((data) => {
+        return { id: data.id, name: data.name, publisher: data.publisher };
+      });
+    const response = {
+      status: "success",
+      data: {
+        books: book,
+      },
+    };
+    return response;
+  }
 };
 
 const showSpecifiedBook = (request, h) => {
